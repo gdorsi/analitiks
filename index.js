@@ -17,8 +17,8 @@ export function setup(accountId, anonymize) {
   _anonymize = 0;
 
   try {
-    _userId = localStorage.getItem("#akid") || id();
-    localStorage.setItem("#akid", _userId);
+    _userId = localStorage.getItem("#ak") || id();
+    localStorage.setItem("#ak", _userId);
   } catch (localStorageBlocked) {
     _userId = id();
   }
@@ -61,7 +61,7 @@ function send(hitType, params) {
     .join("&")}`;
 
   fetch(url, {
-    credentials: _anonymize && "omit",
+    credentials: !_anonymize && "include",
   }).catch(() => {});
 }
 
