@@ -1,7 +1,11 @@
 {
   "name": "analitiks",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "main": "index.js",
   "license": "MIT",
-  "description": "A 650b Google Analytics client for performance maniacs"
+  "description": "A 650b Google Analytics client for performance maniacs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gdorsi/analitiks.git"
+  }
 }
