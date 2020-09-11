@@ -17,11 +17,8 @@ export function setup(accountId, anonymize) {
   _anonymize = 0;
 
   try {
-    _userId = localStorage.getItem("_ga_uid");
-    if (!_userId) {
-      _userId = id();
-      localStorage.setItem("_ga_uid", _userId);
-    }
+    _userId = localStorage.getItem("#akid") || id();
+    localStorage.setItem("#akid", _userId);
   } catch (localStorageBlocked) {
     _userId = id();
   }

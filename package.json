@@ -1,6 +1,6 @@
 {
   "name": "analitiks",
-  "version": "0.1.1",
+  "version": "0.1.5",
   "main": "index.js",
   "license": "MIT",
   "description": "A 650b Google Analytics client for performance maniacs"
