@@ -14,6 +14,8 @@ export function setup(accountId, anonymize) {
     return;
   }
 
+  _anonymize = 0;
+
   try {
     _userId = localStorage.getItem("_ga_uid");
     if (!_userId) {

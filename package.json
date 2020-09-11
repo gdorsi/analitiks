@@ -3,5 +3,5 @@
   "version": "0.1.0",
   "main": "index.js",
   "license": "MIT",
-  "description": "An ultra-lightweight Google Analytics client"
+  "description": "A 650b Google Analytics client for performance maniacs"
 }
