@@ -9,7 +9,7 @@ function id() {
 export function setup(accountId, anonymize) {
   _accountId = accountId;
 
-  if (_anonymize) {
+  if (anonymize) {
     _anonymize = 1;
     return;
   }
