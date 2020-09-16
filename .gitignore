@@ -1,0 +1,23 @@
+.idea
+node_modules
+yarn-error.log
+.DS_Store
+acceptance/*
+.rts2_cache_modern
+dist/
+.size-snapshot.json
+coverage/
+.DS_Store
+
+# yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+#Cypress
+cypress/fixtures/
+cypress/videos/
+
+styleguide/

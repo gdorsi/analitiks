@@ -1,11 +1,24 @@
 {
   "name": "analitiks",
   "version": "0.1.7",
-  "main": "index.js",
+  "main": "index.mjs",
   "license": "MIT",
   "description": "A 650b Google Analytics client for performance maniacs",
   "repository": {
     "type": "git",
     "url": "https://github.com/gdorsi/analitiks.git"
+  },
+  "devDependencies": {
+    "ava": "^3.12.1",
+    "browser-env": "^3.3.0",
+    "sinon": "^9.0.3"
+  },
+  "scripts": {
+    "test": "ava"
+  },
+  "ava": {
+    "require": [
+      "./tests/_setup-browser-env.mjs"
+    ]
   }
 }
