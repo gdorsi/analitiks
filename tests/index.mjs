@@ -4,8 +4,12 @@ import sinon from "sinon";
 let analitiks;
 let uid = 0;
 
-test.beforeEach(async () => {
+const resetModule = async () => {
   analitiks = await import("../index.mjs?id" + uid++);
+};
+
+test.beforeEach(async () => {
+  await resetModule();
   global.fetch = sinon.fake.resolves();
 });
 
@@ -72,10 +76,10 @@ test("trackEvent hanldes anonymous mode correctly", (t) => {
   const url1 = new URL(fetch.firstCall.firstArg);
   const url2 = new URL(fetch.lastCall.firstArg);
 
-  t.notDeepEqual(
+  t.deepEqual(
     url1.searchParams.get("cid"),
     url2.searchParams.get("cid"),
-    "the user id is regenerated at each request"
+    "the user is the same within the session"
   );
   t.deepEqual(
     fetch.lastCall.lastArg,
@@ -164,10 +168,10 @@ test("trackPageView hanldes anonymous mode correctly", (t) => {
   const url1 = new URL(fetch.firstCall.firstArg);
   const url2 = new URL(fetch.lastCall.firstArg);
 
-  t.notDeepEqual(
+  t.deepEqual(
     url1.searchParams.get("cid"),
     url2.searchParams.get("cid"),
-    "the user id is regenerated at each request"
+    "the user is the same within the session"
   );
   t.deepEqual(
     fetch.lastCall.lastArg,
@@ -211,5 +215,48 @@ test("anonymous mode could be disabled", (t) => {
     urlNotAnonymous.searchParams.get("aip"),
     null,
     "the `Anonymize IP` param is no more enabled"
+  );
+});
+
+test("the uid is preserved across subsequent navigations", async (t) => {
+  analitiks.setup("accountid");
+  console.log(localStorage.getItem("#ak"))
+
+  analitiks.trackPageView();
+
+  await resetModule();
+
+  analitiks.setup("accountid");
+
+  analitiks.trackPageView("/test/page");
+
+  const before = new URL(fetch.firstCall.firstArg);
+  const after = new URL(fetch.lastCall.firstArg);
+
+  t.deepEqual(
+    before.searchParams.get("cid"),
+    after.searchParams.get("cid"),
+    "the user id is the same"
+  );
+});
+
+test("in anonymous the uid is refreshed across subequent navigations", async (t) => {
+  analitiks.setup("accountid", true);
+
+  analitiks.trackPageView();
+
+  await resetModule();
+
+  analitiks.setup("accountid", true);
+
+  analitiks.trackPageView("/test/page");
+
+  const before = new URL(fetch.firstCall.firstArg);
+  const after = new URL(fetch.lastCall.firstArg);
+
+  t.notDeepEqual(
+    before.searchParams.get("cid"),
+    after.searchParams.get("cid"),
+    "the user id is refreshed"
   );
 });

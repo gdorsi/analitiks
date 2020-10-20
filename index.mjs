@@ -3,6 +3,7 @@ let _anonymize;
 let _userId;
 
 function id() {
+  /* Something like 1234.1234 */
   return Math.random() * 10 ** 8;
 }
 
@@ -11,16 +12,17 @@ export function setup(accountId, anonymize) {
 
   if (anonymize) {
     _anonymize = 1;
-    return;
+  } else {
+    _anonymize = 0;
   }
 
-  _anonymize = 0;
-
   try {
+    if (_anonymize) throw _anonymize;
+
     _userId = localStorage.getItem("#ak") || id();
     localStorage.setItem("#ak", _userId);
   } catch (localStorageBlocked) {
-    _userId = id();
+    _userId = _userId || id();
   }
 }
 
@@ -45,7 +47,7 @@ function send(hitType, params) {
     `de=UTF-8`,
     serialize("aip", _anonymize),
     serialize("tid", _accountId),
-    serialize("cid", _userId || id()),
+    serialize("cid", _userId),
     serialize("dl", document.location.href),
     serialize("ul", navigator.language.toLowerCase()),
     serialize("dt", document.title),
